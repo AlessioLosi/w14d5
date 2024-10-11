@@ -57,7 +57,11 @@ public class Application {
         //Elimina un elemebnto dal codice isbn
         // ed.findByISBNAndDelete("\"58541bc8-e9af-4434-a20a-e69cb04b982e\"");
         ed.findById("58541bc8-e9af-4434-a20a-e69cb04b982e");
-        ed.filtraElemento("s");
+        ed.findElement("l").forEach(System.out::println);
+        ed.findAutore("autore1").forEach(System.out::println);
+        ;
+        ed.findAnnoLibro(LocalDate.now().minusYears(3)).forEach(System.out::println);
+        ;
 
     }
 }

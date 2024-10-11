@@ -1,11 +1,11 @@
 package dao;
 
 import entities.Elemento;
-import entities.Libro;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,15 +60,40 @@ public class ElementiDAO {
 
     }
 
-    public List<Elemento> filtraElemento(String partialName) {
-        TypedQuery<Elemento> query = em.createQuery("SELECT e FROM Elemento e WHERE e.titolo LIKE :partialaName ", Elemento.class);
-        query.setParameter("partialName", "%" + partialName + "%");
+    public List findElement(String name) {
+        Query query = em.createQuery("SELECT e FROM Elemento e WHERE e.titolo LIKE  :name");
+        query.setParameter("name", "%" + name + "%");
         return query.getResultList();
     }
 
-    public List<Libro> filtraAutore(String nomeAutore) {
-        TypedQuery<Libro> query = em.createQuery("SELECT l  FROM Libro l WHERE l.autore LIKE " + nomeAutore, Libro.class);
-        query.setParameter("nomeAutore", nomeAutore);
+    public List findLibro(String name) {
+        Query query = em.createQuery("SELECT l FROM Libro l WHERE l.titolo LIKE  :name");
+        query.setParameter("name", "%" + name + "%");
         return query.getResultList();
     }
+
+    public List findRivista(String name) {
+        Query query = em.createQuery("SELECT r FROM Rivista r WHERE r.titolo LIKE  :name");
+        query.setParameter("name", "%" + name + "%");
+        return query.getResultList();
+    }
+
+    public List findAutore(String autore) {
+        Query query = em.createQuery("SELECT l FROM Libro l WHERE l.autore =   :autore");
+        query.setParameter("autore", autore);
+        return query.getResultList();
+    }
+
+    public List findAnnoLibro(LocalDate anno) {
+        Query query = em.createQuery("SELECT l FROM Libro l WHERE l.annoDiPubblicazione =   :anno");
+        query.setParameter("anno", anno);
+        return query.getResultList();
+    }
+
+    public List findAnnoRivista(LocalDate anno) {
+        Query query = em.createQuery("SELECT r FROM Rivista r WHERE r.annoDiPubblicazione =   :anno");
+        query.setParameter("anno", anno);
+        return query.getResultList();
+    }
+
 }
