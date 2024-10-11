@@ -4,8 +4,6 @@ import entities.Prestito;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-import java.time.LocalDate;
-
 public class PrestitiDAO {
     private final EntityManager entityManager;
 
@@ -29,9 +27,9 @@ public class PrestitiDAO {
 
     public Prestito findElement(long id) {
         Prestito found = entityManager.find(Prestito.class, id);
-        if (found.dataEffettiva().isBefore(LocalDate.now())) System.out.println("Elemento reso");
+        if (found.dataEffettiva().isBefore(found.dataFine())) System.out.println("Elemento reso in tempo");
         else {
-            System.out.println("Elemento non reso");
+            System.out.println("Elemento non reso in tempo");
 
         }
         return found;
